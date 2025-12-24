@@ -1,0 +1,107 @@
+import { Tabs } from 'expo-router';
+import { Platform, StatusBar, View } from 'react-native';
+
+import { Header } from '@/components/layout/header';
+import {
+  Home01Icon,
+  LibraryIcon,
+  Store01Icon,
+  UserIcon,
+} from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react-native';
+
+export default function TabLayout() {
+  return (
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: '#059669',
+          tabBarInactiveTintColor: '#71717a',
+          tabBarStyle: {
+            backgroundColor: '#ffffff',
+            borderTopWidth: 1,
+            borderTopColor: '#f4f4f5',
+            height: Platform.OS === 'ios' ? 88 : 64,
+            paddingBottom: Platform.OS === 'ios' ? 28 : 8,
+            paddingTop: 8,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: '600',
+            marginTop: 4,
+          },
+          tabBarIconStyle: {
+            marginTop: 4,
+          },
+          freezeOnBlur: true,
+          header: () => <Header />,
+          headerShadowVisible: false,
+        }}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Início',
+            tabBarIcon: ({ color, focused }) => (
+              <HugeiconsIcon
+                size={24}
+                icon={Home01Icon}
+                color={color}
+                strokeWidth={focused ? 3 : 2}
+              />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="catalog"
+          options={{
+            title: 'Catálogo',
+            tabBarIcon: ({ color, focused }) => (
+              <HugeiconsIcon
+                size={24}
+                icon={Store01Icon}
+                color={color}
+                strokeWidth={focused ? 3 : 2}
+              />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="library"
+          options={{
+            title: 'Biblioteca',
+            tabBarIcon: ({ color, focused }) => (
+              <HugeiconsIcon
+                size={24}
+                icon={LibraryIcon}
+                color={color}
+                strokeWidth={focused ? 3 : 2}
+              />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: 'Perfil',
+            tabBarIcon: ({ color, focused }) => (
+              <HugeiconsIcon
+                size={24}
+                icon={UserIcon}
+                color={color}
+                strokeWidth={focused ? 3 : 2}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+    </View>
+  );
+}
