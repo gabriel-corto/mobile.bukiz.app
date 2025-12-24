@@ -7,5 +7,5 @@ export interface Costumer {
 
 export interface AuthResponse {
   costumer: Costumer;
-  authToken: string;
+  accessToken: string;
 }

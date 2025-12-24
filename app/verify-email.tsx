@@ -13,17 +13,14 @@ import { useErrorToast } from '@/hooks/useErrorToast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 
-import {
-  verifyCostumerEmailFormSchema,
-  VerifyCostumerFormData,
-} from '@/schemas/auth-validator';
+import { verifyCostumerEmailFormSchema, VerifyCostumerFormData } from '@/schemas/auth-validator';
 import { useAuthStore } from '@/stores/auth';
 
 export default function SignIn() {
   const router = useRouter();
 
   const { verifyCostumerEmail, isVerifyingCostumerEmail } = useAuth();
-  const { setCostumerAuthFlowData } = useAuthStore();
+  const { setCostumerAuthEmail } = useAuthStore();
 
   const errorToast = useErrorToast;
 
@@ -37,20 +34,18 @@ export default function SignIn() {
 
   const handleVerifyUserEmail = async (data: VerifyCostumerFormData) => {
     Keyboard.dismiss();
+    const { email } = data;
 
     try {
       await verifyCostumerEmail({
-        email: data.email,
+        email,
       });
 
-      setCostumerAuthFlowData({
-        email: data.email,
-      });
+      setCostumerAuthEmail(email);
 
-      router.push('/verify-otp');
+      router.replace('/verify-otp');
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message || 'Erro ao verificar e-mail!';
+      const errorMessage = error.response?.data?.message || 'Erro ao verificar e-mail!';
 
       errorToast({
         title: errorMessage,
@@ -65,9 +60,7 @@ export default function SignIn() {
         <View className="w-full py-36">
           <View className="flex flex-col gap-y-3 items-center justify-center">
             <Logo />
-            <Text className="text-2xl text-zinc-800 font-medium">
-              Acessar Plataforma
-            </Text>
+            <Text className="text-2xl text-zinc-800 font-medium">Acessar Plataforma</Text>
           </View>
 
           <View className="w-full px-8 mt-8 flex gap-y-6">
@@ -94,15 +87,9 @@ export default function SignIn() {
             />
 
             <View className="flex gap-y-6">
-              <SocialAuthButton
-                label="Continuar com google"
-                provider="google"
-              />
+              <SocialAuthButton label="Continuar com google" provider="google" />
 
-              <SocialAuthButton
-                label="Continuar com a apple"
-                provider="apple"
-              />
+              <SocialAuthButton label="Continuar com a apple" provider="apple" />
             </View>
           </View>
         </View>
