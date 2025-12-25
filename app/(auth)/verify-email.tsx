@@ -43,8 +43,9 @@ export default function SignIn() {
 
       setCostumerAuthEmail(email);
 
-      router.replace('/verify-otp');
+      router.push('/verify-otp');
     } catch (error: any) {
+      console.log(error);
       const errorMessage = error.response?.data?.message || 'Erro ao verificar e-mail!';
 
       errorToast({

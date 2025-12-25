@@ -2,14 +2,11 @@ import { Image } from 'expo-image';
 import { useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
-import { FilterItem } from '@/components/filter-item';
+import { FilterButton } from '@/components/shared/buttons/filter-button';
+import { WelcomProfileSection } from '@/components/shared/welcome-section';
 import { books } from '@/mocks/books.mock';
 import { categories } from '@/mocks/categories.mock';
-import {
-  ArrowUpRight01Icon,
-  HeartAddIcon,
-  ShoppingCart01Icon,
-} from '@hugeicons/core-free-icons';
+import { ArrowUpRight01Icon, HeartAddIcon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react-native';
 
 export default function Home() {
@@ -17,33 +14,12 @@ export default function Home() {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="bg-white pt-6 pb-6 px-6 border-b border-zinc-100">
-        <View className="flex-row items-center justify-between">
-          <View>
-            <Text className="text-sm text-zinc-500">Bem-vindo de volta</Text>
-            <Text className="text-3xl font-bold text-zinc-900 mt-1">
-              Olá, Gabriel
-            </Text>
-          </View>
-          <TouchableOpacity className="bg-emerald-50 p-3 rounded-full">
-            <HugeiconsIcon
-              icon={ShoppingCart01Icon}
-              className="size-6 text-emerald-600"
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <WelcomProfileSection />
 
       <View className="bg-white py-4 border-b border-zinc-100">
         <FlatList
           data={categories}
-          renderItem={({ item }) => (
-            <FilterItem
-              item={item}
-              filter={filter}
-              onPress={() => setFilter(item)}
-            />
-          )}
+          renderItem={({ item }) => <FilterButton item={item} filter={filter} onPress={() => setFilter(item)} />}
           keyExtractor={(item) => item}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -52,12 +28,8 @@ export default function Home() {
       </View>
 
       <View className="px-6 pt-6 pb-4 bg-zinc-50">
-        <Text className="text-2xl font-bold text-zinc-900">
-          Destaque da semana
-        </Text>
-        <Text className="text-sm text-zinc-500 mt-1">
-          Os livros mais populares desta semana
-        </Text>
+        <Text className="text-2xl font-bold text-zinc-900">Destaque da semana</Text>
+        <Text className="text-sm text-zinc-500 mt-1">Os livros mais populares desta semana</Text>
       </View>
 
       <FlatList
@@ -74,57 +46,38 @@ export default function Home() {
                     contentFit="cover"
                   />
                   <View className="absolute top-2 right-2 bg-emerald-500 px-2 py-1 rounded-full">
-                    <Text className="text-white text-xs font-bold">
-                      {item.rating}
-                    </Text>
+                    <Text className="text-white text-xs font-bold">{item.rating}</Text>
                   </View>
                 </View>
 
                 <View className="flex-1 justify-between py-1">
                   <View>
-                    <Text
-                      className="text-zinc-900 text-lg font-bold leading-tight"
-                      numberOfLines={2}
-                    >
+                    <Text className="text-zinc-900 text-lg font-bold leading-tight" numberOfLines={2}>
                       {item.title}
                     </Text>
-                    <Text className="text-zinc-500 text-sm mt-1">
-                      {item.author}
-                    </Text>
+                    <Text className="text-zinc-500 text-sm mt-1">{item.author}</Text>
                   </View>
 
                   <View>
-                    <Text className="text-emerald-600 text-2xl font-bold">
-                      R$ {item.price.toFixed(2)}
-                    </Text>
+                    <Text className="text-emerald-600 text-2xl font-bold">R$ {item.price.toFixed(2)}</Text>
                   </View>
                 </View>
 
                 <TouchableOpacity className="absolute top-4 right-4">
                   <View className="bg-zinc-100 p-2 rounded-full">
-                    <HugeiconsIcon
-                      icon={HeartAddIcon}
-                      className="size-5 text-zinc-600"
-                    />
+                    <HugeiconsIcon icon={HeartAddIcon} className="size-5 text-zinc-600" />
                   </View>
                 </TouchableOpacity>
               </View>
 
               <View className="flex-row gap-3 px-4 pb-4">
                 <TouchableOpacity className="flex-1 bg-emerald-600 rounded-xl py-3.5 flex-row items-center justify-center gap-2">
-                  <HugeiconsIcon
-                    icon={ArrowUpRight01Icon}
-                    className="size-5 text-white"
-                  />
-                  <Text className="text-white text-base font-bold">
-                    Obter agora
-                  </Text>
+                  <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-5 text-white" />
+                  <Text className="text-white text-base font-bold">Obter agora</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity className="bg-zinc-100 px-5 rounded-xl py-3.5 flex-row items-center justify-center gap-2">
-                  <Text className="text-zinc-700 text-base font-semibold">
-                    Detalhes
-                  </Text>
+                  <Text className="text-zinc-700 text-base font-semibold">Detalhes</Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>

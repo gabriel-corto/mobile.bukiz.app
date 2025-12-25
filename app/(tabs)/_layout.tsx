@@ -2,18 +2,20 @@ import { router, Tabs } from 'expo-router';
 import { ActivityIndicator, Platform, View } from 'react-native';
 
 import { Header } from '@/components/layout/header';
+import { useNotifications } from '@/hooks/useNotifications';
 import { useAuthStore } from '@/stores/auth';
-import { Home01Icon, LibraryIcon, Store01Icon, UserIcon } from '@hugeicons/core-free-icons';
+import { Home01Icon, LibraryIcon, Notification01Icon, Store01Icon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react-native';
 import { StatusBar } from 'expo-status-bar';
 
 export default function TabLayout() {
   const { _hasHydrated, accessToken } = useAuthStore();
+  const { notificationsResponse } = useNotifications();
 
   if (!_hasHydrated) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
-        <ActivityIndicator size="large" color="#059669" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#059669' }}>
+        <ActivityIndicator size="large" color="#FFF" />
       </View>
     );
   }
@@ -41,7 +43,7 @@ export default function TabLayout() {
             shadowOpacity: 0,
           },
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: 10,
             fontWeight: '600',
             marginTop: 4,
           },
@@ -58,7 +60,7 @@ export default function TabLayout() {
           options={{
             title: 'Início',
             tabBarIcon: ({ color, focused }) => (
-              <HugeiconsIcon size={24} icon={Home01Icon} color={color} strokeWidth={focused ? 3 : 2} />
+              <HugeiconsIcon size={22} icon={Home01Icon} color={color} strokeWidth={focused ? 3 : 2} />
             ),
           }}
         />
@@ -68,7 +70,7 @@ export default function TabLayout() {
           options={{
             title: 'Catálogo',
             tabBarIcon: ({ color, focused }) => (
-              <HugeiconsIcon size={24} icon={Store01Icon} color={color} strokeWidth={focused ? 3 : 2} />
+              <HugeiconsIcon size={22} icon={Store01Icon} color={color} strokeWidth={focused ? 3 : 2} />
             ),
           }}
         />
@@ -78,17 +80,18 @@ export default function TabLayout() {
           options={{
             title: 'Biblioteca',
             tabBarIcon: ({ color, focused }) => (
-              <HugeiconsIcon size={24} icon={LibraryIcon} color={color} strokeWidth={focused ? 3 : 2} />
+              <HugeiconsIcon size={22} icon={LibraryIcon} color={color} strokeWidth={focused ? 3 : 2} />
             ),
           }}
         />
 
         <Tabs.Screen
-          name="profile"
+          name="notifications"
           options={{
-            title: 'Perfil',
+            title: 'Notificações',
+            tabBarBadge: notificationsResponse?.data.length,
             tabBarIcon: ({ color, focused }) => (
-              <HugeiconsIcon size={24} icon={UserIcon} color={color} strokeWidth={focused ? 3 : 2} />
+              <HugeiconsIcon size={22} icon={Notification01Icon} color={color} strokeWidth={focused ? 3 : 2} />
             ),
           }}
         />
