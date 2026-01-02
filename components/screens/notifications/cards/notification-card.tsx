@@ -14,7 +14,7 @@ export function NotificationCard({ notification }: Props) {
 
   const handleReadNotification = async (notificationId: string) => {
     try {
-      const response = await markAsRead(notificationId);
+      await markAsRead(notificationId);
     } catch (error: any) {
       console.log(error.response.data);
     }

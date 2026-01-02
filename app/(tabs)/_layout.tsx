@@ -1,28 +1,14 @@
-import { router, Tabs } from 'expo-router';
-import { ActivityIndicator, Platform, View } from 'react-native';
+import { Tabs } from 'expo-router';
+import { Platform, View } from 'react-native';
 
 import { Header } from '@/components/layout/header';
 import { useNotifications } from '@/hooks/useNotifications';
-import { useAuthStore } from '@/stores/auth';
 import { Home01Icon, LibraryIcon, Notification01Icon, Store01Icon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react-native';
 import { StatusBar } from 'expo-status-bar';
 
 export default function TabLayout() {
-  const { _hasHydrated, accessToken } = useAuthStore();
-  const { notificationsResponse } = useNotifications();
-
-  if (!_hasHydrated) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#059669' }}>
-        <ActivityIndicator size="large" color="#FFF" />
-      </View>
-    );
-  }
-
-  if (!accessToken) {
-    return router.replace('/verify-email');
-  }
+  const { notReadedNotifications } = useNotifications();
 
   return (
     <View style={{ flex: 1 }}>
@@ -89,7 +75,7 @@ export default function TabLayout() {
           name="notifications"
           options={{
             title: 'Notificações',
-            tabBarBadge: notificationsResponse?.data.length,
+            tabBarBadge: notReadedNotifications || undefined,
             tabBarIcon: ({ color, focused }) => (
               <HugeiconsIcon size={22} icon={Notification01Icon} color={color} strokeWidth={focused ? 3 : 2} />
             ),

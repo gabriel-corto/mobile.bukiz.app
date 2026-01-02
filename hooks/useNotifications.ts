@@ -20,10 +20,13 @@ export const useNotifications = () => {
     },
   });
 
+  const notReadedNotifications = notificationsResponse?.data.filter((n) => !n.hasRead).length;
+
   return {
     notificationsResponse,
     isLoadingNotifications,
     isReadingNotification,
+    notReadedNotifications,
     markAsRead,
     refetchNotifications,
   };
